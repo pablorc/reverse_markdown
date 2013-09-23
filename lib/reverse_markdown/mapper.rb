@@ -119,7 +119,7 @@ module ReverseMarkdown
         when :h1, :h2, :h3, :h4, :h5, :h6 # /h(\d)/ for 1.9
           element.name =~ /h(\d)/
           "\n" + ('#' * $1.to_i) + ' '
-        when :em, :i, :span
+        when :em, :i
           element.text.strip.empty? ? '' : '_' if (element.ancestors('em') + element.ancestors('i')).empty?
         when :strong, :b
           element.text.strip.empty? ? '' : '**' if (element.ancestors('strong') + element.ancestors('b')).empty?
@@ -172,7 +172,7 @@ module ReverseMarkdown
           "\n"
         when :dl, :dt, :dd
           "\n"
-        when :em, :i, :span
+        when :em, :i
           element.text.strip.empty? ? '' : '_' if (element.ancestors('em') + element.ancestors('i')).empty?
         when :strong, :b
           element.text.strip.empty? ? '' : '**' if (element.ancestors('strong') + element.ancestors('b')).empty?
