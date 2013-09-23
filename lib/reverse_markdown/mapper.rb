@@ -103,6 +103,9 @@ module ReverseMarkdown
         when :dd
           "\n"
         when :p
+          if element["class"] =="signature"
+            "\n# "
+          else
           if element.ancestors.map(&:name).include?('blockquote')
             "\n\n> "
           elsif [nil, :body].include? parent
@@ -115,6 +118,7 @@ module ReverseMarkdown
             is_first ? "" : "\n\n"
           else
             "\n\n"
+          end
           end
         when :h1, :h2, :h3, :h4, :h5, :h6 # /h(\d)/ for 1.9
           element.name =~ /h(\d)/

@@ -42,4 +42,9 @@ describe ReverseMarkdown::Mapper do
     xit { should match /\n- li 1, p 1\n\n- li 1, p 2\n/ }
   end
 
+
+  context "dictionaries" do
+    it { should include '###### Use lap as chair chase' }
+    it { should match /\nmice use lap as chair so sun bathe so find something else more interesting. Chase imaginary bugs shake treat bag mark territory. Chew foot. Shake treat bag burrow under covers or lick butt burrow under covers throwup on your pillow. Burrow under covers claw drapes chew foot why must they do that for hopped up on goofballs.\n/  }
+  end
 end
