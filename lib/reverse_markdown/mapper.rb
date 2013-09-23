@@ -87,8 +87,6 @@ module ReverseMarkdown
           else
             "#{indent}- "
           end
-        when :pre
-          "\n"
         when :ol
           self.li_counter = 0
           "\n"
@@ -129,8 +127,8 @@ module ReverseMarkdown
           element.text.strip.empty? ? '' : '**' if (element.ancestors('strong') + element.ancestors('b')).empty?
         when :blockquote
           "> "
-        when :code
-          if parent == :pre
+        when :code, :pre
+          if parent == :pre || element.name.to_s == "pre"
             self.github_style_code_blocks ? "\n```\n" : "\n    "
           else
             " `"
@@ -166,7 +164,7 @@ module ReverseMarkdown
     def ending(element)
       parent = element.parent ? element.parent.name.to_sym : nil
       case element.name.to_sym
-        when :html, :body, :pre, :hr
+        when :html, :body, :hr
           ""
         when :p
           "\n\n"
@@ -182,8 +180,8 @@ module ReverseMarkdown
           element.text.strip.empty? ? '' : '**' if (element.ancestors('strong') + element.ancestors('b')).empty?
         when :li, :blockquote, :root, :ol, :ul
           "\n"
-        when :code
-          if parent == :pre
+        when :code, :pre
+          if parent == :pre || element.name.to_s == "pre"
             self.github_style_code_blocks ? "\n```" : "\n"
           else
            '` '

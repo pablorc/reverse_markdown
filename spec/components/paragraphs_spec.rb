@@ -8,7 +8,7 @@ describe ReverseMarkdown::Mapper do
 
   it { should_not start_with "\n\n" }
   it { should start_with "First content\n\nSecond content\n\n" }
-  it { should include "\n\n_Complex_\n\n    Content" }
+  it { should include "\n\n_Complex_\n\n     \n    Content" }
 
   context "signature class" do
     it { should match /\n# I'm a signature/ }

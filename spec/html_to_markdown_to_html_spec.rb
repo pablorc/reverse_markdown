@@ -81,24 +81,5 @@ describe 'Round trip: HTML to markdown (via reverse_markdown) to HTML (via redca
     roundtrip_should_preserve(%{<p><img src="http://foo.bar/dog.png" alt="My Dog" title="Ralph"></p>})
     roundtrip_should_preserve(%{<p><img src="http://foo.bar/dog.png" alt="My Dog"></p>})
   end
-
-  it "should preserve code blocks" do
-    roundtrip_should_preserve(%{
-      <p>This is a normal paragraph:</p>
-
-      <pre><code>This is a code block. </code></pre>
-    })
-  end
-
-  it "should preserve code blocks with embedded whitespace" do
-    roundtrip_should_preserve(%{
-      <p>Here is an example of AppleScript:</p>
-
-      <pre><code>tell application Foo
-          beep
-      end tell
-      </code></pre>
-    })
-  end
 end
 
