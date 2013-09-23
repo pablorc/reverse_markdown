@@ -96,6 +96,12 @@ module ReverseMarkdown
           "\n"
         when :div
           "\n"
+        when :dl
+          "\n"
+        when :dt
+          "\n###### "
+        when :dd
+          "\n"
         when :p
           if element.ancestors.map(&:name).include?('blockquote')
             "\n\n> "
@@ -113,7 +119,7 @@ module ReverseMarkdown
         when :h1, :h2, :h3, :h4, :h5, :h6 # /h(\d)/ for 1.9
           element.name =~ /h(\d)/
           "\n" + ('#' * $1.to_i) + ' '
-        when :em, :i
+        when :em, :i, :span
           element.text.strip.empty? ? '' : '_' if (element.ancestors('em') + element.ancestors('i')).empty?
         when :strong, :b
           element.text.strip.empty? ? '' : '**' if (element.ancestors('strong') + element.ancestors('b')).empty?
@@ -164,7 +170,9 @@ module ReverseMarkdown
           "\n"
         when :h1, :h2, :h3, :h4, :h5, :h6 # /h(\d)/ for 1.9
           "\n"
-        when :em, :i
+        when :dl, :dt, :dd
+          "\n"
+        when :em, :i, :span
           element.text.strip.empty? ? '' : '_' if (element.ancestors('em') + element.ancestors('i')).empty?
         when :strong, :b
           element.text.strip.empty? ? '' : '**' if (element.ancestors('strong') + element.ancestors('b')).empty?
