@@ -80,6 +80,8 @@ module ReverseMarkdown
       case element.name.to_sym
         when :html, :body
           ""
+        when :pre
+          "\n"
         when :li
           indent = '  ' * [(element.ancestors('ol').count + element.ancestors('ul').count - 1), 0].max
           if parent == :ol
@@ -102,7 +104,7 @@ module ReverseMarkdown
           "\n"
         when :p
           if element["class"] =="signature"
-            "\n# "
+            "\n## "
           else
           if element.ancestors.map(&:name).include?('blockquote')
             "\n\n> "
@@ -127,8 +129,8 @@ module ReverseMarkdown
           element.text.strip.empty? ? '' : '**' if (element.ancestors('strong') + element.ancestors('b')).empty?
         when :blockquote
           "> "
-        when :code, :pre
-          if parent == :pre || element.name.to_s == "pre"
+        when :code
+          if parent == :pre
             self.github_style_code_blocks ? "\n```\n" : "\n    "
           else
             " `"
@@ -164,7 +166,7 @@ module ReverseMarkdown
     def ending(element)
       parent = element.parent ? element.parent.name.to_sym : nil
       case element.name.to_sym
-        when :html, :body, :hr
+        when :html, :body, :hr, :pre
           ""
         when :p
           "\n\n"
@@ -180,8 +182,8 @@ module ReverseMarkdown
           element.text.strip.empty? ? '' : '**' if (element.ancestors('strong') + element.ancestors('b')).empty?
         when :li, :blockquote, :root, :ol, :ul
           "\n"
-        when :code, :pre
-          if parent == :pre || element.name.to_s == "pre"
+        when :code 
+          if parent == :pre
             self.github_style_code_blocks ? "\n```" : "\n"
           else
            '` '
