@@ -24,7 +24,9 @@ module ReverseMarkdown
         extractions[md5] = match
         "{code-block-extraction-#{md5}}"
       end
-
+      puts "---"
+puts markdown
+puts "^^^"
       markdown = markdown.split("\n").map do |line|
         if line.match(/^( {4}|\t)/)
           line
@@ -56,7 +58,12 @@ module ReverseMarkdown
         output << opening(element).to_s
 
         markdown_chunks = element.children.map { |child| process_element(child) }
+        puts "chunks"
+        puts 
+        puts markdown_chunks.inspect
         remove_adjacent_whitespace!(markdown_chunks)
+        puts "<<<"
+        puts markdown_chunks.inspect
         output << markdown_chunks.join
 
         output << ending(element).to_s
@@ -223,7 +230,7 @@ module ReverseMarkdown
     def process_text(element)
       parent = element.parent ? element.parent.name.to_sym : nil
       case
-        when parent == :code
+        when parent == :code || parent == :pre
           if self.github_style_code_blocks
             element.text
           else
